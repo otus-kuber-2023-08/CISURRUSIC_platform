@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:22.04
+FROM nginxinc/nginx-unprivileged
 WORKDIR /app
-RUN chown -R 1001 /app
 USER 1001
-EXPOSE 8000
-CMD python /app/app.py
+COPY config.cfg /etc/nginx/conf.d
+CMD ["nginx", "-g", "daemon off;"]

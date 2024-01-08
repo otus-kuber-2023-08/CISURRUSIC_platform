@@ -5,13 +5,19 @@ metadata:
   labels:
     app: web
 spec:
+  containers:
+  - name: web-sidecar
+    image: cisurrusic/sc:0.3
+    volumeMounts:
+    - name: app
+      mountPath: /app
   initContainers:
-  - name: install
+  - name: init-sidecar
     image: busybox:latest
     command: ['sh', '-c', 'wget -O- https://tinyurl.com/otus-k8s-intro | sh']
     volumeMounts:
     - name: app
-      mountPath: "/app"
+      mountPath: /app
   volumes:
   - name: app
-    emptyDir: {}     
+    emptyDir: {}
